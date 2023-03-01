@@ -1,0 +1,35 @@
+name: release-dev
+
+on:
+  push:
+    branches:
+      - main
+env:
+  BEFORE_SHA: ${{ github.event.before }}
+
+jobs:
+  release-dev:
+    runs-on: ubuntu-22.04
+    outputs:
+      releaseName: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseName }}
+      releaseVersion: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseVersion }}
+      releaseBuildNumber: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseBuildNumber }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3.3.0
+
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7.27.1
+
+      - name: Setup node
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install deps
+        run: pnpm i --frozen-lockfile
+      
+      - name: Release affected
+        run: pnpm nx affected --target:release --base=$BEFORE_SHA

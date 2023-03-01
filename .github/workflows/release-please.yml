@@ -55,7 +55,12 @@ jobs:
               return {
                 releaseName,
                 releaseVersion,
-                releaseBuildNumber: releaseVersion.split('.').join(''),
+                releaseBuildNumber: releaseVersion.split('.')
+                                      .map((value, index) => {
+                                        if (index === 0) return value;
+                                        return value.padStart(3, '0');
+                                      })
+                                      .join('')
               };
             } catch (error) {
               core.setFailed(`Failed to get project name: ${error}`);
