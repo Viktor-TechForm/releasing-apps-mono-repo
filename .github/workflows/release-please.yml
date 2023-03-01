@@ -24,6 +24,7 @@ jobs:
         env:
           RELEASE_OUTPUTS: ${{ toJson(steps.release.outputs) }}
         with:
+          result-encoding: string
           script: |
             try {
               const releaseOutputs = JSON.parse(process.env['RELEASE_OUTPUTS']);
@@ -78,7 +79,7 @@ jobs:
         run: pnpm i --frozen-lockfile
 
       - name: Release my-project
-        if: ${{ startsWith( toJson(steps.get-project-name.outputs.result), 'my-project' )}}
+        if: ${{ startsWith( steps.get-project-name.outputs.result, 'my-project' )}}
         uses: ./.github/workflows/release-my-project.yml
         with:
           releaseName: steps.get-project.name.outputs.result
