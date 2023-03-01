@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/compare/my-project-mobile-app-v1.2.0...my-project-mobile-app-v1.2.1) (2023-03-01)
+
+
+### Bug Fixes
+
+* ci script is bad ([a806836](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/a80683628b1c3d445ead0813286fa836bc7e4419))
+
 ## [1.2.0](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/compare/my-project-mobile-app-v1.1.2...my-project-mobile-app-v1.2.0) (2023-03-01)
 
 
