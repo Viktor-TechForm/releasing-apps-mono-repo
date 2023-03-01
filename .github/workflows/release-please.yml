@@ -34,29 +34,29 @@ jobs:
               const paths_released = JSON.parse(releaseOutputs.paths_released);
               if (!Array.isArray(paths_released) || paths_released.length !== 1)
                 throw new Error('expected paths_released to be an array an of length 1');
-              let releaseName;
+              let releaseNameAndVersion;
               for (const [key, value] of Object.entries(releaseOutputs)) {
                 if (key.endsWith('--name')) {
-                  if (!releaseName) {
-                    releaseName = value;
+                  if (!releaseNameAndVersion) {
+                    releaseNameAndVersion = value;
                   } else {
                     throw new Error('Multiple keys ending with --name found');
                   }
                 }
               }
-              if (!releaseName) throw new Error('No release name found');
+              if (!releaseNameAndVersion) throw new Error('No release name found');
               // the value should look like e.g.: odensenoeglen-backend: v1.0.0
-              const releaseNameArray = releaseName.split(': v');
-              console.log({releaseNameArray})
+              const releaseNameArray = releaseNameAndVersion.split(': v');
+              console.log({ releaseNameArray });
               if (releaseNameArray.length !== 2 || releaseNameArray[0].length < 1) {
                 throw new Error('Unexpected release name format');
               }
-              const {releaseName, releaseVersion} = releaseNameArray;
+              const [releaseName, releaseVersion] = releaseNameArray;
               return {
                 releaseName,
                 releaseVersion,
-                releaseBuildNumber: releaseVersion.split('.').join('')
-              }
+                releaseBuildNumber: releaseVersion.split('.').join(''),
+              };
             } catch (error) {
               core.setFailed(`Failed to get project name: ${error}`);
             }
