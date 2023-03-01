@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.8](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/compare/my-project-mobile-app-v1.2.7...my-project-mobile-app-v1.2.8) (2023-03-01)
+
+
+### Bug Fixes
+
+* add backend release workflow ([65a05dc](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/65a05dc8fd6597e114ff11ea8653b758a0ff57a6))
+
 ## [1.2.7](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/compare/my-project-mobile-app-v1.2.6...my-project-mobile-app-v1.2.7) (2023-03-01)
 
 
