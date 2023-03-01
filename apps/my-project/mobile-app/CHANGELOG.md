@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/compare/my-project-mobile-app-v1.1.1...my-project-mobile-app-v1.1.2) (2023-03-01)
+
+
+### Bug Fixes
+
+* use a job instead ([5ff60b4](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/5ff60b4fac00127f36ea22393461e3b235577dbe))
+
 ## [1.1.1](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/compare/my-project-mobile-app-v1.1.0...my-project-mobile-app-v1.1.1) (2023-03-01)
 
 
