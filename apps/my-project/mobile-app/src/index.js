@@ -25,6 +25,8 @@ console.log('why not');
 // another change
 // lol
 
+// i am now affected
+
 // i am changed hehehe
 
 // add entire git history
