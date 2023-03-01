@@ -12,7 +12,9 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-22.04
     outputs:
-      releaseName: ${{ steps.get-project-name.outputs.result }}
+      releaseName: ${{ steps.get-project-name.outputs.result.releaseName }}
+      releaseVersion: ${{ steps.get-project-name.outputs.result.releaseVersion }}
+      releaseBuildNumber: ${{ steps.get-project-name.outputs.result.releaseBuildNumber }}
     steps:
       - uses: google-github-actions/release-please-action@v3.7.4
         id: release
@@ -26,7 +28,6 @@ jobs:
         env:
           RELEASE_OUTPUTS: ${{ toJson(steps.release.outputs) }}
         with:
-          result-encoding: string
           script: |
             try {
               const releaseOutputs = JSON.parse(process.env['RELEASE_OUTPUTS']);
@@ -50,14 +51,19 @@ jobs:
               if (releaseNameArray.length !== 2 || releaseNameArray[0].length < 1) {
                 throw new Error('Unexpected release name format');
               }
-              return releaseNameArray[0];
+              const {releaseName, releaseVersion} = releaseNameArray;
+              return {
+                releaseName,
+                releaseVersion,
+                releaseBuildNumber: releaseVersion.split('.').join('')
+              }
             } catch (error) {
               core.setFailed(`Failed to get project name: ${error}`);
             }
 
       - name: Print release name
         env:
-          RELEASE_NAME: ${{ steps.get-project-name.outputs.result }}
+          RELEASE_NAME: ${{ steps.get-project-name.outputs.result.releaseName }}
         run: echo $RELEASE_NAME
 
       # - name: Check out repository code
@@ -86,3 +92,5 @@ jobs:
     uses: ./.github/workflows/release-my-project.yml
     with:
       releaseName: ${{ needs.release-please.outputs.releaseName }}
+      releaseVersion: ${{ needs.release-please.outputs.releaseVersion }}
+      releaseBuildNumber: ${{ needs.release-please.outputs.releaseBuildNumber }}

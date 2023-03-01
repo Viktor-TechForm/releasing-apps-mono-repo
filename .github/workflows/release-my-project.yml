@@ -5,68 +5,39 @@ on:
       releaseName:
         required: true
         type: string
+      releaseVersion:
+        required: true
+        type: string
+      releaseBuildNumber:
+        required: false
+        type: string
 jobs:
-  get-version:
-    runs-on: ubuntu-latest
-    environment: my-project
-    outputs:
-      version: ${{ steps.get-version.outputs.result }}
-      buildNumber: ${{ steps.get-build-number.outputs.result }}
-    steps:
-      - name: Get package details
-        id: get-package-details
-        env:
-          RELEASE_NAME: ${{ inputs.releaseName }}
-        run: echo "package-list=${pnpm list --depth -1 -r --json --filter $RELEASE_NAME}" >> $GITHUB_OUTPUT
-
-      - name: Get package version
-        id: get-version
-        uses: actions/github-script@v6.4.0
-        env:
-          PACKAGE_DETAILS: ${{ toJson(steps.get-package-details.package-list) }}
-        with:
-          script: |
-            try {
-              const packageList = process.env['PACKAGE_DETAILS']
-              console.log({packageList})
-              const parsedList = JSON.parse(packageList);
-              console.log({parsedList})
-              if (!Array.isArray(parsedList) || parsedList.length !== 1) {
-                throw new Error('expected PACKAGE_DETAILS to be of type array and length 1')
-              }
-              const package = parsedList[0];
-
-              if(!package?.version) {
-                throw new Error('expected PACKAGE_DETAILS[0] to contain version')
-              }
-              return package.version;
-            } catch (error) {
-              core.setFailed(`Failed to get project version: ${error}`);
-            }
-
-      - name: Get build number
-        id: get-build-number
-        uses: actions/github-script@v6.4.0
-        env:
-          VERSION: ${{ steps.get-version.outputs.result }}
-        with:
-          script: |
-            try {
-              const version = process.env["VERSION"]
-              if(!version){
-                throw new Error('expected VERSION')
-              }
-              return version.split('.').join('')
-            } catch (error) {
-              core.setFailed(`Failed to get project build number: ${error}`);
-            }
-
   mobile-app-android:
     runs-on: ubuntu-latest
     environment: my-project
     needs: get-version
     if: ${{ contains( inputs.releaseName, 'mobile-app' ) }}
     steps:
+      - name: Check out repository code
+        if: ${{ steps.release.outputs.releases_created }}
+        uses: actions/checkout@v3.3.0
+
+      - uses: pnpm/action-setup@v2.2.4
+        if: ${{ steps.release.outputs.releases_created }}
+        with:
+          version: 7.27.1
+
+      - name: Setup node
+        if: ${{ steps.release.outputs.releases_created }}
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install deps
+        if: ${{ steps.release.outputs.releases_created }}
+        run: pnpm i --frozen-lockfile
+
       - name: Bootstrap
         run: pnpm nx bootstrap my-project-mobile-app
 
@@ -82,6 +53,26 @@ jobs:
     needs: get-version
     if: ${{ contains( inputs.releaseName, 'mobile-app' ) }}
     steps:
+      - name: Check out repository code
+        if: ${{ steps.release.outputs.releases_created }}
+        uses: actions/checkout@v3.3.0
+
+      - uses: pnpm/action-setup@v2.2.4
+        if: ${{ steps.release.outputs.releases_created }}
+        with:
+          version: 7.27.1
+
+      - name: Setup node
+        if: ${{ steps.release.outputs.releases_created }}
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install deps
+        if: ${{ steps.release.outputs.releases_created }}
+        run: pnpm i --frozen-lockfile
+
       - name: Bootstrap
         run: pnpm nx bootstrap my-project-mobile-app
 
