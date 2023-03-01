@@ -4,21 +4,18 @@ on:
   push:
     branches:
       - main
-env:
-  BEFORE_SHA: ${{ github.event.before }}
 
 jobs:
   release-dev:
     runs-on: ubuntu-22.04
-    outputs:
-      releaseName: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseName }}
-      releaseVersion: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseVersion }}
-      releaseBuildNumber: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseBuildNumber }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0 # nx needs the full history
+
+      # set base and head sha's for nx affected commands
+      - uses: nrwl/nx-set-shas@v3.0.2
 
       - uses: pnpm/action-setup@v2.2.4
         with:
@@ -34,4 +31,4 @@ jobs:
         run: pnpm i --frozen-lockfile
 
       - name: Release affected
-        run: pnpm nx affected --target=release --base=$BEFORE_SHA
+        run: pnpm nx affected --target=release

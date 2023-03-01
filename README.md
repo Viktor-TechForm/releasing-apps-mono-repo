@@ -11,6 +11,9 @@ TODO:
 - [x] Get `release-android/ios-only` from somewhere
   - We can stop it manually for now if we don't want to upload it to one of the stores
 - [ ] Release on every push to dev environments
+  - Make sure a release isn't triggered when a `release-please` pull request is merged
+  - Make sure the `nx affected` doesn't trigger for all projects when a root file is changed (for example when we change an eslint rule)
+  - Currently the easiest way to exclude project from being automatically released is to not have the script called in the `release-dev.yml` (currently `release`), this needs to be heavily documented if we choose this implementation
 
 ## Notes
 
