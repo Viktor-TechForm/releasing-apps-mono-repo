@@ -55,5 +55,5 @@ end
 # ! Expects a production flavor to be defined in ./android/app/build.gradle
 lane :ci_build_android do |options|
   version_name, version_code = options[:version].split("-")
-  puts "ci_build_android envs: { version_number: #{version_number}, build_number: #{build_number} }"
+  puts "ci_build_android envs: { version_name: #{version_name}, version_code: #{version_code} }"
 end
