@@ -8,5 +8,8 @@
     "bootstrap": "pnpm i && bundle install",
     "fastlane": "bundle exec fastlane",
     "release": "echo \"No release script\" && exit 0"
+  },
+  "dependencies": {
+    "uuid": "9.0.0"
   }
 }
