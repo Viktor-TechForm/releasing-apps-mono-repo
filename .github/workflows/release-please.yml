@@ -12,9 +12,9 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-22.04
     outputs:
-      releaseName: ${{ steps.get-project-name.outputs.result.releaseName }}
-      releaseVersion: ${{ steps.get-project-name.outputs.result.releaseVersion }}
-      releaseBuildNumber: ${{ steps.get-project-name.outputs.result.releaseBuildNumber }}
+      releaseName: ${{ fromJson(steps.get-project-name.outputs.result).releaseName }}
+      releaseVersion: ${{ fromJson(steps.get-project-name.outputs.result).releaseVersion }}
+      releaseBuildNumber: ${{ fromJson(steps.get-project-name.outputs.result).releaseBuildNumber }}
     steps:
       - uses: google-github-actions/release-please-action@v3.7.4
         id: release
@@ -62,6 +62,7 @@ jobs:
             }
 
       - name: Print release name
+        if: ${{ steps.release.outputs.releases_created }}
         env:
           RELEASE_NAME: ${{ fromJson(steps.get-project-name.outputs.result).releaseName }}
           VERSION: ${{ fromJson(steps.get-project-name.outputs.result).releaseVersion }}
