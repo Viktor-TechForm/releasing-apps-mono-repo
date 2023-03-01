@@ -1,0 +1,7 @@
+{
+  "separate-pull-requests": true,
+  "packages": {
+    "apps/my-project/backend": {},
+    "apps/my-project/mobile-app": {}
+  }
+}
