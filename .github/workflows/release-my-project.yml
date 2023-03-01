@@ -37,11 +37,14 @@ jobs:
           node-version: '18'
           cache: 'pnpm'
 
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1.139.0
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          working-directory: ./apps/my-project/mobile-app
+
       - name: Install deps
         run: pnpm i --frozen-lockfile
-
-      - name: Bootstrap
-        run: pnpm nx bootstrap my-project-mobile-app
 
       - name: Release ios app
         env:
@@ -69,6 +72,12 @@ jobs:
 
       - name: Install deps
         run: pnpm i --frozen-lockfile
+
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1.139.0
+        with:
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          working-directory: ./apps/my-project/mobile-app
 
       - name: Bootstrap
         run: pnpm nx bootstrap my-project-mobile-app
