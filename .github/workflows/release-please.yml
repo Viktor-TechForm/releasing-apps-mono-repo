@@ -64,9 +64,9 @@ jobs:
       - name: Print release name
         if: ${{ steps.release.outputs.releases_created }}
         env:
-          RELEASE_NAME: ${{ fromJson(steps.get-project-name.outputs.result).releaseName }}
-          VERSION: ${{ fromJson(steps.get-project-name.outputs.result).releaseVersion }}
-          BUILD_NUMBER: ${{ fromJson(steps.get-project-name.outputs.result).releaseBuildNumber }}
+          RELEASE_NAME: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseName }}
+          VERSION: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseVersion }}
+          BUILD_NUMBER: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseBuildNumber }}
         run: echo "name $RELEASE_NAME , version $VERSION , buildNumber $BUILD_NUMBER"
 
       # - name: Check out repository code
