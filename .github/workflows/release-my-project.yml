@@ -80,3 +80,27 @@ jobs:
           RELEASE_VERSION: ${{ inputs.releaseVersion }}
           BUILD_NUMBER: ${{ inputs.releaseBuildNumber }}
         run: pnpm nx fastlane my-project-mobile-app -- ci_upload_to_testflight version:"$RELEASE_VERSION-$BUILD_NUMBER"
+
+  backend:
+    runs-on: ubuntu-latest
+    environment: my-project
+    if: ${{ contains( inputs.releaseName, 'backend' ) }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3.3.0
+
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7.27.1
+
+      - name: Setup node
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install deps
+        run: pnpm i --frozen-lockfile
+
+      - name: Release backend
+        run: pnpm nx release my-project-backend
