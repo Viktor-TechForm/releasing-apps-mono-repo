@@ -12,9 +12,9 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-22.04
     outputs:
-      releaseName: ${{ fromJson(steps.get-project-name.outputs.result).releaseName }}
-      releaseVersion: ${{ fromJson(steps.get-project-name.outputs.result).releaseVersion }}
-      releaseBuildNumber: ${{ fromJson(steps.get-project-name.outputs.result).releaseBuildNumber }}
+      releaseName: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseName }}
+      releaseVersion: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseVersion }}
+      releaseBuildNumber: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseBuildNumber }}
     steps:
       - uses: google-github-actions/release-please-action@v3.7.4
         id: release
