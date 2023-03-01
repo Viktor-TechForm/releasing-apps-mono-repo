@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.6](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/compare/my-project-mobile-app-v1.2.5...my-project-mobile-app-v1.2.6) (2023-03-01)
+
+
+### Bug Fixes
+
+* add ruby to ci ([fe322e0](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/fe322e0f55d9760f51c2e5315fe24d3d151e18f7))
+
 ## [1.2.5](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/compare/my-project-mobile-app-v1.2.4...my-project-mobile-app-v1.2.5) (2023-03-01)
 
 
