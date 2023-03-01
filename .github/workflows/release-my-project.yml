@@ -25,23 +25,19 @@ jobs:
     if: ${{ contains( inputs.releaseName, 'mobile-app' ) }}
     steps:
       - name: Check out repository code
-        if: ${{ steps.release.outputs.releases_created }}
         uses: actions/checkout@v3.3.0
 
       - uses: pnpm/action-setup@v2.2.4
-        if: ${{ steps.release.outputs.releases_created }}
         with:
           version: 7.27.1
 
       - name: Setup node
-        if: ${{ steps.release.outputs.releases_created }}
         uses: actions/setup-node@v3.6.0
         with:
           node-version: '18'
           cache: 'pnpm'
 
       - name: Install deps
-        if: ${{ steps.release.outputs.releases_created }}
         run: pnpm i --frozen-lockfile
 
       - name: Bootstrap
@@ -59,23 +55,19 @@ jobs:
     if: ${{ contains( inputs.releaseName, 'mobile-app' ) }}
     steps:
       - name: Check out repository code
-        if: ${{ steps.release.outputs.releases_created }}
         uses: actions/checkout@v3.3.0
 
       - uses: pnpm/action-setup@v2.2.4
-        if: ${{ steps.release.outputs.releases_created }}
         with:
           version: 7.27.1
 
       - name: Setup node
-        if: ${{ steps.release.outputs.releases_created }}
         uses: actions/setup-node@v3.6.0
         with:
           node-version: '18'
           cache: 'pnpm'
 
       - name: Install deps
-        if: ${{ steps.release.outputs.releases_created }}
         run: pnpm i --frozen-lockfile
 
       - name: Bootstrap
