@@ -12,13 +12,6 @@ on:
         required: false
         type: string
 jobs:
-  dummy:
-    runs-on: ubuntu-latest
-    environment: my-project
-    steps:
-      - name: Dummy step
-        run: echo "Running my-project dummy step"
-
   mobile-app-android:
     runs-on: ubuntu-latest
     environment: my-project
