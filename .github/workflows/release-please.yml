@@ -11,6 +11,8 @@ jobs:
       contents: write
       pull-requests: write
     runs-on: ubuntu-22.04
+    outputs:
+      releaseName: ${{ steps.get-project-name.outputs.result }}
     steps:
       - uses: google-github-actions/release-please-action@v3.7.4
         id: release
@@ -52,34 +54,35 @@ jobs:
             } catch (error) {
               core.setFailed(`Failed to get project name: ${error}`);
             }
-      
+
       - name: Print release name
         env:
           RELEASE_NAME: ${{ steps.get-project-name.outputs.result }}
         run: echo $RELEASE_NAME
 
-      - name: Check out repository code
-        if: ${{ steps.release.outputs.releases_created }}
-        uses: actions/checkout@v3.3.0
+      # - name: Check out repository code
+      #   if: ${{ steps.release.outputs.releases_created }}
+      #   uses: actions/checkout@v3.3.0
 
-      - uses: pnpm/action-setup@v2.2.4
-        if: ${{ steps.release.outputs.releases_created }}
-        with:
-          version: 7.27.1
+      # - uses: pnpm/action-setup@v2.2.4
+      #   if: ${{ steps.release.outputs.releases_created }}
+      #   with:
+      #     version: 7.27.1
 
-      - name: Setup node
-        if: ${{ steps.release.outputs.releases_created }}
-        uses: actions/setup-node@v3.6.0
-        with:
-          node-version: '18'
-          cache: 'pnpm'
+      # - name: Setup node
+      #   if: ${{ steps.release.outputs.releases_created }}
+      #   uses: actions/setup-node@v3.6.0
+      #   with:
+      #     node-version: '18'
+      #     cache: 'pnpm'
 
-      - name: Install deps
-        if: ${{ steps.release.outputs.releases_created }}
-        run: pnpm i --frozen-lockfile
+      # - name: Install deps
+      #   if: ${{ steps.release.outputs.releases_created }}
+      #   run: pnpm i --frozen-lockfile
 
-      - name: Release my-project
-        if: ${{ startsWith( steps.get-project-name.outputs.result, 'my-project' )}}
-        uses: ./.github/workflows/release-my-project.yml
-        with:
-          releaseName: steps.get-project.name.outputs.result
+  release-my-project:
+    if: ${{ startsWith( needs.release-please.outputs.releaseName, 'my-project' )}}
+    needs: release-please
+    uses: ./.github/workflows/release-my-project.yml
+    with:
+      releaseName: ${{ needs.release-please.outputs.releaseName }}
