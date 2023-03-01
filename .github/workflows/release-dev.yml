@@ -32,4 +32,4 @@ jobs:
         run: pnpm i --frozen-lockfile
       
       - name: Release affected
-        run: pnpm nx affected --target:release --base=$BEFORE_SHA
+        run: pnpm nx affected --target=release --base=$BEFORE_SHA
