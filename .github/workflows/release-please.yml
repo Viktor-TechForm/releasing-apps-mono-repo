@@ -51,6 +51,11 @@ jobs:
             } catch (error) {
               core.setFailed(`Failed to get project name: ${error}`);
             }
+      
+      - name: Print release name
+        env:
+          RELEASE_NAME: ${{ steps.get-project-name.outputs.result }}
+        run: echo $RELEASE_NAME
 
       - name: Check out repository code
         if: ${{ steps.release.outputs.releases_created }}
@@ -73,7 +78,7 @@ jobs:
         run: pnpm i --frozen-lockfile
 
       - name: Release my-project
-        if: ${{ startsWith( steps.get-project-name.outputs.result, 'my-project' )}}
+        if: ${{ startsWith( toJson(steps.get-project-name.outputs.result), 'my-project' )}}
         uses: ./.github/workflows/release-my-project.yml
-        with: 
+        with:
           releaseName: steps.get-project.name.outputs.result
