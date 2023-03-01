@@ -22,7 +22,6 @@ jobs:
   mobile-app-android:
     runs-on: ubuntu-latest
     environment: my-project
-    needs: get-version
     if: ${{ contains( inputs.releaseName, 'mobile-app' ) }}
     steps:
       - name: Check out repository code
@@ -50,14 +49,13 @@ jobs:
 
       - name: Release ios app
         env:
-          RELEASE_VERSION: ${{ needs.get-version.outputs.version }}
-          BUILD_NUMBER: ${{ needs.get-version.outputs.buildNumber }}
+          RELEASE_VERSION: ${{ inputs.releaseVersion }}
+          BUILD_NUMBER: ${{ inputs.releaseBuildNumber }}
         run: pnpm nx fastlane my-project-mobile-app -- ci_build_android version:"$RELEASE_VERSION-$BUILD_NUMBER"
 
   mobile-app-ios:
     runs-on: ubuntu-latest
     environment: my-project
-    needs: get-version
     if: ${{ contains( inputs.releaseName, 'mobile-app' ) }}
     steps:
       - name: Check out repository code
@@ -85,6 +83,6 @@ jobs:
 
       - name: Release ios app
         env:
-          RELEASE_VERSION: ${{ needs.get-version.outputs.version }}
-          BUILD_NUMBER: ${{ needs.get-version.outputs.buildNumber }}
+          RELEASE_VERSION: ${{ inputs.releaseVersion }}
+          BUILD_NUMBER: ${{ inputs.releaseBuildNumber }}
         run: pnpm nx fastlane my-project-mobile-app -- ci_upload_to_testflight version:"$RELEASE_VERSION-$BUILD_NUMBER"
