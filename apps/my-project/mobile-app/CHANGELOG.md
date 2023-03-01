@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/compare/my-project-mobile-app-v1.1.2...my-project-mobile-app-v1.2.0) (2023-03-01)
+
+
+### Features
+
+* extract build number and version in one script ([db6c81f](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/db6c81f3275073a608c4249aa65fc05298cb0dff))
+
 ## [1.1.2](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/compare/my-project-mobile-app-v1.1.1...my-project-mobile-app-v1.1.2) (2023-03-01)
 
 
