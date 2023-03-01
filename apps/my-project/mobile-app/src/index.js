@@ -24,3 +24,5 @@ console.log('why not');
 
 // another change
 // lol
+
+// add entire git history

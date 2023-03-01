@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3.3.0
+        with:
+          fetch-depth: 0 # nx needs the full history
 
       - uses: pnpm/action-setup@v2.2.4
         with:
@@ -30,6 +32,6 @@ jobs:
 
       - name: Install deps
         run: pnpm i --frozen-lockfile
-      
+
       - name: Release affected
         run: pnpm nx affected --target=release --base=$BEFORE_SHA
