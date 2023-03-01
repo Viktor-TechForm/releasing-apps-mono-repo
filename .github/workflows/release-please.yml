@@ -43,6 +43,7 @@ jobs:
               if (!releaseName) throw new Error('No release name found');
               // the value should look like e.g.: odensenoeglen-backend: v1.0.0
               const releaseNameArray = releaseName.split(': v');
+              console.log({releaseNameArray})
               if (releaseNameArray.length !== 2 || releaseNameArray[0].length < 1) {
                 throw new Error('Unexpected release name format');
               }

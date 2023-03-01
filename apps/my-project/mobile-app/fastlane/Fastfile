@@ -1,0 +1,59 @@
+skip_docs
+opt_out_usage
+
+# Environment variable keys meant to in the running environment
+envKeys = Hash[
+  # Credentials with read/write access to both production and dev S3 fastlane buckets
+  "adminS3KeyId" => "FASTLANE_ADMIN_ACCESS_KEY_ID",
+  "adminS3Secret" => "FASTLANE_ADMIN_SECRET_ACCESS_KEY",
+
+  # Credentials with read access to dev S3 fastlane bucket
+  "readDevKeyId" => "FASTLANE_S3_READ_ACCESS_KEY_ID",
+  "readDevSecret" => "FASTLANE_S3_READ_SECRET_ACCESS_KEY",
+
+  # * Envs below are required for a CI run
+  # Credentials with read access to prod s3 fastlane bucket
+  "readProdKeyId" => "FASTLANE_ODENSENOEGLEN_READ_AWS_ACCESS_KEY_ID",
+  "readProdSecret" => "FASTLANE_ODENSENOEGLEN_READ_AWS_SECRET_ACCESS_KEY",
+
+  # Credentials for production app store connect api
+  "ascKeyId" => "ODENSENOEGLEN_ASC_API_KEY_ID",
+  "ascIssuerId" => "ODENSENOEGLEN_ASC_API_ISSUER_ID",
+  "ascKeyContent" => "ODENSENOEGLEN_ASC_API_KEY_CONTENT",
+
+  # Credentials to unlock android key store
+  "uploadStorePwd" => "UPLOAD_STORE_PWD",
+  "uploadKeyPwd" => "UPLOAD_KEY_PWD"
+]
+
+## Matches appstore certificate for production and development teams, meant for use by the admin computer
+## ! Expects the credentials of the user with admin rights to the fastlane bucket
+lane :admin_match do
+  accessKeyId = ENV[envKeys["adminS3KeyId"]]
+  secretAccessKey = ENV[envKeys["adminS3Secret"]]
+  puts "admin_match envs: { accessKeyId: #{accessKeyId}, secretAccessKey: #{secretAccessKey} }"
+end
+
+## ! Expects a IAM user with read capabilities for techform team
+lane :certificates do
+  accessKeyId = ENV[envKeys["readDevKeyId"]]
+  secretAccessKey = ENV[envKeys["readDevSecret"]]
+  puts "certificates envs: { accessKeyId: #{accessKeyId}, secretAccessKey: #{secretAccessKey} }"
+end
+
+## ! Expects MATCH_PASSWORD with the password to decrypt the contents of the bucket/teamId
+## ! Expects the credentials of a user with read access to the teamId of the productionTeam
+lane :ci_upload_to_testflight do |options|
+  setup_ci
+  accessKeyId = ENV[envKeys["readProdKeyId"]]
+  secretAccessKey = ENV[envKeys["readProdSecret"]]
+  version_number, build_number = options[:version].split("-")
+  puts "ci_upload_to_testflight envs: { accessKeyId: #{accessKeyId}, secretAccessKey: #{secretAccessKey}, version_number: #{version_number}, build_number: #{build_number} }"
+end
+
+
+# ! Expects a production flavor to be defined in ./android/app/build.gradle
+lane :ci_build_android do |options|
+  version_name, version_code = options[:version].split("-")
+  puts "ci_build_android envs: { version_number: #{version_number}, build_number: #{build_number} }"
+end
