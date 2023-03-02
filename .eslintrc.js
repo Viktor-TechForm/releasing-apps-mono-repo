@@ -18,6 +18,7 @@ module.exports = {
     'dot-notation': 'off',
     'no-unused-vars': 'off',
     'no-bad-rules': 'off',
+    'another-rule': 'off',
   },
 };
 

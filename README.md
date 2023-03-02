@@ -25,3 +25,6 @@ TODO:
 - Should every sript be a pipeline in `turbo.json`?
   - It will enable caching and parallel execution, but some of those scripts won't benefit? stuff like an app release script
   - In CI every release script can just be a pnpm run
+- Changes in the following files trigger a "change" in turborepo's mind
+  - package.json
+  - turbo.json
