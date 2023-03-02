@@ -1,0 +1,7 @@
+ios
+vendor
+CHANGELOG.md
+declarations
+build/
+# secrets
+src/lib/config/.config.ts
