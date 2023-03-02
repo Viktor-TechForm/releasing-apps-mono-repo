@@ -1,9 +1,5 @@
 name: PR and Turbo
-on:
-  push:
-    branches:
-      - main
-  pull_request:
+on: pull_request
 jobs:
   lint-check-test:
     permissions:
@@ -13,12 +9,6 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3.3.0
-        with:
-          fetch-depth: 0 # nx needs the full history
-
-      # set base and head sha's for nx affected commands
-      - uses: nrwl/nx-set-shas@v3.0.2
-        id: get-shas
 
       - uses: pnpm/action-setup@v2.2.4
         with:
@@ -39,6 +29,4 @@ jobs:
         run: git branch --track main origin/main
 
       - name: Run checks and tests
-        env:
-          BASE: ${{ steps.get-shas.outputs.base }}
-        run: pnpm turbo run format-check lint build test --filter=\[$BASE\]
+        run: pnpm turbo run format-check lint build test --filter=\[origin/main\]

@@ -2,7 +2,7 @@
   "name": "releasing-apps-mono-repo",
   "version": "0.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "ci-test": "turbo run --filter=[origin/main]  format-check lint build test"
   },
   "keywords": [],
   "author": "",
