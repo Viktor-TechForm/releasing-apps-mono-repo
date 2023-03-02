@@ -7,6 +7,6 @@
     "release": "echo \"No release script specified\" && exit 0"
   },
   "devDependencies": {
-    "@types/jest": "29.4.0"
+    "@types/jest": "28.1.1"
   }
 }
