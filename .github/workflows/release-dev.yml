@@ -16,6 +16,7 @@ jobs:
 
       # set base and head sha's for nx affected commands
       - uses: nrwl/nx-set-shas@v3.0.2
+        id: set-shas
 
       - uses: pnpm/action-setup@v2.2.4
         with:
@@ -30,5 +31,8 @@ jobs:
       - name: Install deps
         run: pnpm i --frozen-lockfile
 
+        # ! currently every project is affected if there has been a change in pnpm-lock.yaml since last push, look here https://github.com/nrwl/nx/issues/1972
       - name: Release affected
-        run: pnpm nx affected --target=release
+        env:
+          LAST_RELEASE: ${{ steps.set-shas.outputs.base }}
+        run: pnpm turbo run release --filter=[$LAST_RELEASE]

@@ -17,5 +17,6 @@ module.exports = {
     '@typescript-eslint/no-shadow': 'error',
     'dot-notation': 'off',
     'no-unused-vars': 'off',
+    'no-bad-rules': 'off',
   },
 };

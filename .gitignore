@@ -41,3 +41,8 @@ Thumbs.db
 # typescript
 declarations
 tsconfig.tsbuildinfo
+
+another-one
+
+# turbo
+.turbo

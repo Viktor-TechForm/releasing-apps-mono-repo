@@ -43,7 +43,7 @@ jobs:
         env:
           RELEASE_VERSION: ${{ inputs.releaseVersion }}
           BUILD_NUMBER: ${{ inputs.releaseBuildNumber }}
-        run: pnpm nx fastlane my-project-mobile-app -- ci_build_android version:"$RELEASE_VERSION-$BUILD_NUMBER"
+        run: pnpm run --filter my-project-mobile-app fastlane ci_build_android version:"$RELEASE_VERSION-$BUILD_NUMBER"
 
   mobile-app-ios:
     runs-on: ubuntu-latest
@@ -73,13 +73,13 @@ jobs:
           working-directory: ./apps/my-project/mobile-app
 
       - name: Bootstrap
-        run: pnpm nx bootstrap my-project-mobile-app
+        run: pnpm run --filter my-project-mobile-app bootstrap 
 
       - name: Release ios app
         env:
           RELEASE_VERSION: ${{ inputs.releaseVersion }}
           BUILD_NUMBER: ${{ inputs.releaseBuildNumber }}
-        run: pnpm nx fastlane my-project-mobile-app -- ci_upload_to_testflight version:"$RELEASE_VERSION-$BUILD_NUMBER"
+        run: pnpm run --filter my-project-mobile-app fastlane ci_upload_to_testflight version:"$RELEASE_VERSION-$BUILD_NUMBER"
 
   backend:
     runs-on: ubuntu-latest
@@ -103,4 +103,4 @@ jobs:
         run: pnpm i --frozen-lockfile
 
       - name: Release backend
-        run: pnpm nx release my-project-backend
+        run: pnpm run --filter my-project-backend release 

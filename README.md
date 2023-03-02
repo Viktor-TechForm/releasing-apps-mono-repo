@@ -20,4 +20,8 @@ TODO:
 - NX does not have a problem with "missing" scripts when running a command like `nx affected` or `nx run-many`, but targeting a specific package like `nx run my-project-backend:release` will fail with an error if `my-project-backend` does not have a release script.
   - This might not mean we have to add "empty" scripts to all packages since we'll probably create individual release workflows for each project anyway
 
-<!-- Hello this is a comment -->
+## Turborepo
+
+- Should every sript be a pipeline in `turbo.json`?
+  - It will enable caching and parallel execution, but some of those scripts won't benefit? stuff like an app release script
+  - In CI every release script can just be a pnpm run
