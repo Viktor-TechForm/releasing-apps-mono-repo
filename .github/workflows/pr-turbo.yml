@@ -1,12 +1,14 @@
-name: release-dev
-
+name: PR and Turbo
 on:
   push:
     branches:
       - main
-
+  pull_request:
 jobs:
-  release-dev:
+  lint-check-test:
+    permissions:
+      contents: 'read'
+      actions: 'read'
     runs-on: ubuntu-22.04
     steps:
       - name: Check out repository code
@@ -16,7 +18,7 @@ jobs:
 
       # set base and head sha's for nx affected commands
       - uses: nrwl/nx-set-shas@v3.0.2
-        id: set-shas
+        id: get-shas
 
       - uses: pnpm/action-setup@v2.2.4
         with:
@@ -31,7 +33,12 @@ jobs:
       - name: Install deps
         run: pnpm i --frozen-lockfile
 
-      - name: Release affected
+      # if run on a PR, origin/main won't exist
+      - name: Track main branch
+        if: ${{ github.event_name == 'pull_request' }}
+        run: git branch --track main origin/main
+
+      - name: Run checks and tests
         env:
-          LAST_RELEASE: ${{ steps.set-shas.outputs.base }}
-        run: pnpm turbo run release --filter=\[$LAST_RELEASE\]
+          BASE: ${{ steps.get-shas.outputs.base }}
+        run: pnpm turbo run format-check lint build test --filter=\[$BASE\]

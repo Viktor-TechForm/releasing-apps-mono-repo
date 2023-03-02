@@ -1,12 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
-    "build": {},
+    "build": {
+      "outputs": ["./declarations"],
+      "dependsOn": ["^build"]
+    },
     "test": {},
     "bootstrap": {
       "outputs": ["./vendor", "Gemfile.lock"] // output folders are relative to the executing script (workspace root)
     },
     "lint": {},
-    "release": {}
+    "release": {},
+    "format-check": {},
+    "format-write": {}
   }
 }
