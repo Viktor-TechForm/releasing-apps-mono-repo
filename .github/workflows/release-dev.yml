@@ -35,4 +35,4 @@ jobs:
       - name: Release affected
         env:
           LAST_RELEASE: ${{ steps.set-shas.outputs.base }}
-        run: pnpm turbo run release --filter=[$LAST_RELEASE]
+        run: pnpm turbo run release --filter=\[$LAST_RELEASE\]
