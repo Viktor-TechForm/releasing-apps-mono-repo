@@ -1,0 +1,8 @@
+# Add files here to ignore them from prettier formatting
+
+/dist
+/coverage
+pnpm-lock.yaml
+# release-please generates unformatted changelogs
+CHANGELOG.md
+.release-please-manifest.json
