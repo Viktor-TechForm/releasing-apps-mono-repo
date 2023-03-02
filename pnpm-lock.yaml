@@ -28,11 +28,14 @@ importers:
 
   apps/my-project/mobile-app:
     specifiers:
+      '@types/jest': 29.4.0
       uuid: 9.0.0
       yargs: 17.7.1
     dependencies:
       uuid: 9.0.0
       yargs: 17.7.1
+    devDependencies:
+      '@types/jest': 29.4.0
 
 packages:
 
@@ -772,6 +775,13 @@ packages:
     resolution: {integrity: sha512-c3mAZEuK0lvBp8tmuL74XRKn1+y2dcwOUpH7x4WrF6gk1GIgiluDRgMYQtw2OFcBvAJWlt6ASU3tSqxp0Uu0Aw==}
     dependencies:
       '@types/istanbul-lib-report': 3.0.0
+    dev: true
+
+  /@types/jest/29.4.0:
+    resolution: {integrity: sha512-VaywcGQ9tPorCX/Jkkni7RWGFfI11whqzs8dvxF41P17Z+z872thvEvlIbznjPJ02kl1HMX3LmLOonsj2n7HeQ==}
+    dependencies:
+      expect: 29.4.3
+      pretty-format: 29.4.3
     dev: true
 
   /@types/json-schema/7.0.11:

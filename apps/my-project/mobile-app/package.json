@@ -13,5 +13,8 @@
   "dependencies": {
     "uuid": "9.0.0",
     "yargs": "17.7.1"
+  },
+  "devDependencies": {
+    "@types/jest": "29.4.0"
   }
 }
