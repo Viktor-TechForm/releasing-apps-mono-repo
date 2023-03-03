@@ -117,7 +117,7 @@ jobs:
   release-odensenoeglen:
     if: ${{ startsWith( needs.release-please.outputs.releaseName, 'odensenoeglen' )}}
     needs: release-please
-    uses: ./.github/workflows/release-odensenoeglen.yml
+    uses: ./.github/workflows/release-my-project.yml
     with:
       releaseName: ${{ needs.release-please.outputs.releaseName }}
       releaseVersion: ${{ needs.release-please.outputs.releaseVersion }}
