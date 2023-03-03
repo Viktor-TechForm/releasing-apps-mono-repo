@@ -15,6 +15,7 @@ jobs:
       releaseName: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseName }}
       releaseVersion: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseVersion }}
       releaseBuildNumber: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseBuildNumber }}
+      releaseCreated: ${{ steps.release.outputs.releases_created }}
     steps:
       - uses: google-github-actions/release-please-action@v3.7.4
         id: release
@@ -74,10 +75,49 @@ jobs:
           BUILD_NUMBER: ${{ steps.get-project-name.outputs.result && fromJson(steps.get-project-name.outputs.result).releaseBuildNumber }}
         run: echo "name $RELEASE_NAME , version $VERSION , buildNumber $BUILD_NUMBER"
 
-  release-my-project:
-    if: ${{ startsWith( needs.release-please.outputs.releaseName, 'my-project' )}}
+  release-dev:
+    if: ${{ !needs.release-please.outputs.releaseCreated }}
     needs: release-please
-    uses: ./.github/workflows/release-my-project.yml
+    runs-on: ubuntu-22.04
+    env:
+      TECHFORM_NPM_AUTH_TOKEN: ${{ secrets.NPM_GITHUB_REGISTRY_AUTH_TOKEN }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3.3.0
+        with:
+          fetch-depth: 0 # nx needs the full history
+
+      # set base and head sha's for nx affected commands
+      - uses: nrwl/nx-set-shas@v3.0.2
+        id: set-shas
+
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7.27.1
+
+      - name: Setup node
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: '18'
+          cache: 'pnpm'
+
+      - name: Install deps
+        run: pnpm i --frozen-lockfile
+
+      - name: Generate config
+        env:
+          LATEST_RELEASE_SHA: ${{ steps.set-shas.outputs.base }}
+        run: pnpm turbo run generateConfig --filter=\[$LATEST_RELEASE_SHA\] -- dev
+
+      - name: Release affected
+        env:
+          LATEST_RELEASE_SHA: ${{ steps.set-shas.outputs.base }}
+        run: pnpm turbo run release --filter=\[$LATEST_RELEASE_SHA\]
+
+  release-odensenoeglen:
+    if: ${{ startsWith( needs.release-please.outputs.releaseName, 'odensenoeglen' )}}
+    needs: release-please
+    uses: ./.github/workflows/release-odensenoeglen.yml
     with:
       releaseName: ${{ needs.release-please.outputs.releaseName }}
       releaseVersion: ${{ needs.release-please.outputs.releaseVersion }}
