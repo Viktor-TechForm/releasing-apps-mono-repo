@@ -117,8 +117,9 @@ jobs:
         uses: actions/github-script@v6.4.0
         with:
           script: |
+            const jwt_decode = require('jwt-decode');
             const idToken = await core.getIDToken();
-            console.log(JSON.stringify(idToken))
+            console.log(jwt_decode(idToken))
 
       - name: Generate config
         env:
