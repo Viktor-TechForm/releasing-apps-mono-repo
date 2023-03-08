@@ -118,7 +118,7 @@ jobs:
         with:
           script: |
             const idToken = await core.getIDToken();
-            console.log(idToken)
+            console.log(JSON.stringify(idToken))
 
       - name: Generate config
         env:
