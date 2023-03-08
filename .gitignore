@@ -47,3 +47,5 @@ yikes
 
 # turbo
 .turbo
+
+scripts/setRepoSub.cjs
