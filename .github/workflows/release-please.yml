@@ -79,6 +79,8 @@ jobs:
     if: ${{ !needs.release-please.outputs.releaseCreated }}
     needs: release-please
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write # required to create a github release
     env:
       TECHFORM_NPM_AUTH_TOKEN: ${{ secrets.NPM_GITHUB_REGISTRY_AUTH_TOKEN }}
     steps:
@@ -113,6 +115,15 @@ jobs:
         env:
           LATEST_RELEASE_SHA: ${{ steps.set-shas.outputs.base }}
         run: pnpm turbo run release --filter=\[$LATEST_RELEASE_SHA\]
+
+      - name: Create github release
+        env:
+          LATEST_RELEASE_SHA: ${{ steps.set-shas.outputs.base }}
+        uses: actions/github-script@v6.4.0
+        with:
+          script: |
+            const script = require('./scripts/createGithubRelease.cjs')
+            await script({github, context, exec});
 
   release-odensenoeglen:
     if: ${{ startsWith( needs.release-please.outputs.releaseName, 'odensenoeglen' )}}
