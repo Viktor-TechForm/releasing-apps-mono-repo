@@ -11,6 +11,7 @@ function promisedExec(cmd, exec) {
         stderr: data => reject(data.toString()),
         stdout: data => resolve(data.toString()),
       },
+      silent: true,
     });
   });
 }
@@ -29,7 +30,7 @@ function promisedExec(cmd, exec) {
  * @returns
  */
 module.exports = async ({github, context, exec}) => {
-  const now = new Date().toISOString();
+  const now = new Date().toISOString().replace(/:/g, '-');
   const affectedPackages = await promisedExec(
     `pnpm list -r --depth -1 --filter=[${process.env.LATEST_RELEASE_SHA}]`,
     exec,
