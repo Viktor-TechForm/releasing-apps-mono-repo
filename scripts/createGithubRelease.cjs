@@ -41,6 +41,9 @@ module.exports = async ({github, context, exec}) => {
   // this will cause json.parse to fail, but shouldn't happen as every project should be included in pnpm-workspace.yaml
   /** @type {Array<object>} */
   const packages = JSON.parse(affectedPackages);
+
+  console.log('affected packages', packages);
+
   if (packages.length < 1) {
     console.log('No affected packages, skipping github tag and release');
     return 0;
@@ -52,8 +55,6 @@ module.exports = async ({github, context, exec}) => {
     );
     return 0;
   }
-
-  console.log('affected packages', packages);
 
   const body = `## Released packages
 *ignore mobile apps*
