@@ -8,8 +8,8 @@ function promisedExec(cmd, exec) {
   return new Promise((resolve, reject) => {
     exec.exec(cmd, undefined, {
       listeners: {
-        stderr: data => reject(data),
-        stdout: data => resolve(data),
+        stderr: data => reject(data.toString()),
+        stdout: data => resolve(data.toString()),
       },
     });
   });
