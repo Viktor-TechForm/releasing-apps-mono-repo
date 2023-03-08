@@ -1,5 +1,6 @@
 name: PR and Turbo
-on: pull_request
+on:
+  pull_request:
 jobs:
   lint-check-test:
     permissions:
@@ -10,7 +11,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3.3.0
         with:
-          fetch-depth: 0 # nx needs the full history
+          fetch-depth: 0 # turborepo needs the full history
 
       - uses: pnpm/action-setup@v2.2.4
         with:
@@ -27,8 +28,10 @@ jobs:
 
       # if run on a PR, origin/main won't exist
       - name: Track main branch
-        if: ${{ github.event_name == 'pull_request' }}
         run: git branch --track main origin/main
+
+      - name: Generate config
+        run: pnpm turbo run generateConfig --filter=\[origin/main\] -- test
 
       - name: Run checks and tests
         run: pnpm turbo run format-check lint build test --filter=\[origin/main\]

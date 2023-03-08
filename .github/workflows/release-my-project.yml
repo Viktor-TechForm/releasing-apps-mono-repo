@@ -13,7 +13,7 @@ on:
         type: string
 jobs:
   mobile-app-android:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: my-project
     if: ${{ contains( inputs.releaseName, 'mobile-app' ) }}
     steps:
@@ -39,14 +39,14 @@ jobs:
       - name: Install deps
         run: pnpm i --frozen-lockfile
 
-      - name: Release ios app
+      - name: Release android app
         env:
           RELEASE_VERSION: ${{ inputs.releaseVersion }}
           BUILD_NUMBER: ${{ inputs.releaseBuildNumber }}
-        run: pnpm run --filter my-project-mobile-app fastlane ci_build_android version:"$RELEASE_VERSION-$BUILD_NUMBER"
+        run: echo "should release my-project Android app version $RELEASE_VERSION - $BUILD_NUMBER now"
 
   mobile-app-ios:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # ! run on mac-os when we actually release it
     environment: my-project
     if: ${{ contains( inputs.releaseName, 'mobile-app' ) }}
     steps:
@@ -73,16 +73,16 @@ jobs:
           working-directory: ./apps/my-project/mobile-app
 
       - name: Bootstrap
-        run: pnpm run --filter my-project-mobile-app bootstrap 
+        run: pnpm run --filter my-project-mobile-app bootstrap
 
       - name: Release ios app
         env:
           RELEASE_VERSION: ${{ inputs.releaseVersion }}
           BUILD_NUMBER: ${{ inputs.releaseBuildNumber }}
-        run: pnpm run --filter my-project-mobile-app fastlane ci_upload_to_testflight version:"$RELEASE_VERSION-$BUILD_NUMBER"
+        run: echo "should release my-project iOS app version $RELEASE_VERSION - $BUILD_NUMBER now"
 
   backend:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     environment: my-project
     if: ${{ contains( inputs.releaseName, 'backend' ) }}
     steps:
@@ -103,4 +103,4 @@ jobs:
         run: pnpm i --frozen-lockfile
 
       - name: Release backend
-        run: pnpm run --filter my-project-backend release 
+        run: pnpm run --filter my-project-backend release

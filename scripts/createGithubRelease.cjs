@@ -37,22 +37,17 @@ module.exports = async ({github, context, exec}) => {
     `pnpm list -r --depth -1 --filter=[${process.env.LATEST_RELEASE_SHA}] --json`,
     exec,
   );
-  // pnpm list -r can output [{name: 'workspace1'}][{name: 'workspace2'}] if there are multiple projects in the folder, which aren't part of the same workspace
+  // pnpm list -r can output `[{name: 'workspace1'}][{name: 'workspace2'}]` if there are multiple projects in the folder, which aren't part of the same workspace
   // this will cause json.parse to fail, but shouldn't happen as every project should be included in pnpm-workspace.yaml
   /** @type {Array<object>} */
-  const packages = JSON.parse(affectedPackages);
+  let packages = JSON.parse(affectedPackages);
 
   console.log('affected packages', packages);
 
+  packages = packages.filter(item => item.name !== rootProjectName);
+
   if (packages.length < 1) {
     console.log('No affected packages, skipping github tag and release');
-    return 0;
-  }
-
-  if (packages.every(project => project.name === rootProjectName)) {
-    console.log(
-      'The only affected package was root, skipping github tag and release',
-    );
     return 0;
   }
 
