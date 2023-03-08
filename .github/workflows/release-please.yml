@@ -80,6 +80,7 @@ jobs:
     needs: release-please
     runs-on: ubuntu-22.04
     concurrency: dev
+    environment: my-project
     permissions:
       contents: write # required to create a github release
       id-token: write # required to request the github OIDC JWT ID token
