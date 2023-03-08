@@ -10,16 +10,31 @@ module.exports = {
   ],
   rules: {
     'import/prefer-default-export': 'off',
-    'import/extensions': 'off',
-    'import/no-unresolved': 'off',
-    'no-underscore-dangle': 'off',
+    camelcase: 'off',
+    'import/extensions': 'off', // interferes with typescript
+    'import/no-unresolved': 'off', // interferes with typescript
     'no-shadow': 'off',
+    'no-underscore-dangle': 'off',
     '@typescript-eslint/no-shadow': 'error',
+    'no-restricted-syntax': [
+      'error',
+      'ForInStatement',
+      'LabeledStatement',
+      'WithStatement',
+    ],
+    'no-use-before-define': [
+      'error',
+      {
+        functions: false,
+        classes: true,
+        variables: false,
+        allowNamedExports: false,
+      },
+    ],
     'dot-notation': 'off',
-    'no-unused-vars': 'off',
-    'no-bad-rules': 'off',
-    'another-rule': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {argsIgnorePattern: '^_', varsIgnorePattern: '^_'},
+    ],
   },
 };
-
-// hehe changed

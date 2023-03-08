@@ -12,6 +12,7 @@
     "lint": {},
     "release": {},
     "format-check": {},
-    "format-write": {}
+    "format-write": {},
+    "generateConfig": {}
   }
 }

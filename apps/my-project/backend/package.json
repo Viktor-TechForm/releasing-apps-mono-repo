@@ -6,7 +6,8 @@
     "build": "echo \"No build script\" && exit 0",
     "lint": "echo \"No files to lint\" && exit 0",
     "format-write": "prettier --write .",
-    "format-check": "prettier --check ."
+    "format-check": "prettier --check .",
+    "generateConfig": "node scripts/generateConfig.mjs"
   },
   "devDependencies": {
     "@types/jest": "28.1.1"
