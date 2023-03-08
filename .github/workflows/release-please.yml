@@ -80,7 +80,6 @@ jobs:
     needs: release-please
     runs-on: ubuntu-22.04
     concurrency: dev
-    environment: my-project
     permissions:
       contents: write # required to create a github release
       id-token: write # required to request the github OIDC JWT ID token
@@ -108,19 +107,18 @@ jobs:
       - name: Install deps
         run: pnpm i --frozen-lockfile
 
-      # - name: Configure AWS Credentials
-      #   uses: aws-actions/configure-aws-credentials@v2.0.0
-      #   with:
-      #     role-to-assume: arn:aws:iam::123456789100:role/my-github-actions-role
-      #     aws-region: eu-north-1
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2.0.0
+        with:
+          role-to-assume: arn:aws:iam::443567130951:role/github_actions_admin
+          aws-region: eu-north-1
 
-      - name: Print jwt token
+      - name: Check aws Credentials
         uses: actions/github-script@v6.4.0
         with:
           script: |
-            const jwt_decode = require('jwt-decode');
-            const idToken = await core.getIDToken();
-            console.log(jwt_decode(idToken))
+            if(process.env.AWS_ACCESS_KEY_ID) console.log('accessKeyId exists!')
+            if(process.env.AWS_SECRET_ACCESS_KEY) console.log('secretAccessKey exists!')
 
       - name: Generate config
         env:

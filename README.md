@@ -18,6 +18,7 @@ TODO:
 ## Notes
 
 - NX does not have a problem with "missing" scripts when running a command like `nx affected` or `nx run-many`, but targeting a specific package like `nx run my-project-backend:release` will fail with an error if `my-project-backend` does not have a release script.
+
   - This might not mean we have to add "empty" scripts to all packages since we'll probably create individual release workflows for each project anyway
 
 ## Turborepo
