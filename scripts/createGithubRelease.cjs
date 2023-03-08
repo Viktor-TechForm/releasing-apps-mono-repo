@@ -35,7 +35,7 @@ module.exports = async ({github, context, exec}) => {
     exec,
   );
   console.log('affected packages', affectedPackages);
-  await github.repos.createRelease({
+  await github.rest.repos.createRelease({
     owner: context.repo.owner,
     repo: context.repo.repo,
     tag_name: `dev-${now}`,
