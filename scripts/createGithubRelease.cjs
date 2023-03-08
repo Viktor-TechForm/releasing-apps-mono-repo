@@ -31,7 +31,7 @@ function promisedExec(cmd, exec) {
 module.exports = async ({github, context, exec}) => {
   const now = new Date().toISOString();
   const affectedPackages = await promisedExec(
-    `pnpm list -r --depth -1 --filter=[${process.env.LAST_RELEASE_SHA}]`,
+    `pnpm list -r --depth -1 --filter=[${process.env.LATEST_RELEASE_SHA}]`,
     exec,
   );
   console.log('affected packages', affectedPackages);
