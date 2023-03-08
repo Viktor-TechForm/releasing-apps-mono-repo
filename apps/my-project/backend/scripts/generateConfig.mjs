@@ -1,4 +1,4 @@
-import {writeFile} from 'node:fs/promises';
+import {mkdir, writeFile} from 'node:fs/promises';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
@@ -76,5 +76,6 @@ async function generateConfig(
     `to file: ${generatedConfigPath}`,
   );
 
+  await mkdir(dirname(generatedConfigPath), {recursive: true});
   await writeFile(generatedConfigPath, configString);
 }

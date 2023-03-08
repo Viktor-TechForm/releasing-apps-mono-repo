@@ -1,0 +1,11 @@
+*.d.ts
+node_modules
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+.config.ts
+/configs/*
+!/configs/dev.config.mjs
+!/configs/test.config.mjs

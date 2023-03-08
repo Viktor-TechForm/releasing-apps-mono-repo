@@ -36,5 +36,6 @@ module.exports = {
       'error',
       {argsIgnorePattern: '^_', varsIgnorePattern: '^_'},
     ],
+    'no-console': 'off',
   },
 };
