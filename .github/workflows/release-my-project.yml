@@ -22,7 +22,7 @@ jobs:
 
       - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7.27.1
+          version: 7.29.1
 
       - name: Setup node
         uses: actions/setup-node@v3.6.0
@@ -55,7 +55,7 @@ jobs:
 
       - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7.27.1
+          version: 7.29.1
 
       - name: Setup node
         uses: actions/setup-node@v3.6.0
@@ -91,7 +91,7 @@ jobs:
 
       - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7.27.1
+          version: 7.29.1
 
       - name: Setup node
         uses: actions/setup-node@v3.6.0
