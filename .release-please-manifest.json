@@ -1,4 +1,5 @@
 {
   "apps/my-project/mobile-app": "1.2.8",
-  "apps/my-project/mobile-app-dummy": "1.0.0"
+  "apps/my-project/mobile-app-dummy": "1.0.0",
+  "apps/my-project/backend": "1.0.0"
 }
