@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.3.0](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/compare/my-project-mobile-app-v1.2.8...my-project-mobile-app-v1.3.0) (2023-03-08)
+
+
+### Features
+
+* hello ([c24bbd1](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/c24bbd1994bdf0d30104218f13f007b90bfb86c8))
+* use turborepo ([d8f626e](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/d8f626e8205739a8b6811cb60fd0d586e7901b5d))
+
+
+### Bug Fixes
+
+* add another dependency ([e70c7a6](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/e70c7a67be5b95cb1ba50bae4b5b403b907fff5c))
+* add dependency ([bd3fee2](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/bd3fee22526dd80528a8f35d8260b68a8816e1d4))
+* add git history ([d7de777](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/d7de7770baa2b5283a45d3d0025261899335e387))
+* commiting this ([29d3faf](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/29d3faf0f12577220f039fa0c355747e48445851))
+* update build number generation ([43b98a0](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/43b98a00dc488f9378f4c2e2cf92a4c69d29d278))
+* whatup ([b6b75d2](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/commit/b6b75d2d68a0724ca71d3ab6dda416002084e3b2))
+
 ## [1.2.8](https://github.com/Viktor-TechForm/releasing-apps-mono-repo/compare/my-project-mobile-app-v1.2.7...my-project-mobile-app-v1.2.8) (2023-03-01)
 
 
