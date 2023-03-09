@@ -107,6 +107,14 @@ jobs:
       - name: Install deps
         run: pnpm i --frozen-lockfile
 
+      - name: Print envs before credentials
+        uses: actions/github-script@v6.4.0
+        with:
+          script: |
+            if(process.env.AWS_ACCESS_KEY_ID) console.log('accessKeyId exists!')
+            if(process.env.AWS_SECRET_ACCESS_KEY) console.log('secretAccessKey exists!')
+            console.log(process.env)
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2.0.0
         with:
@@ -119,6 +127,7 @@ jobs:
           script: |
             if(process.env.AWS_ACCESS_KEY_ID) console.log('accessKeyId exists!')
             if(process.env.AWS_SECRET_ACCESS_KEY) console.log('secretAccessKey exists!')
+            console.log(process.env)
 
       - name: Generate config
         env:
